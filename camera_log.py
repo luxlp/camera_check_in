@@ -12,9 +12,11 @@ from streamlit import errors
 #computer user
 user = getuser()
 #dir
-data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
+#data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
 #files
-csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
+#csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
+#URL
+url = 'https://github.com/luxlp/camera_check_in/blob/main/Device_sign-out_sheet.csv'
 #Page-Setup-----------------------------------------------------------------------------------------------------------
 st.set_page_config(
     page_title='Camera Check-in/out',
@@ -25,7 +27,7 @@ st.set_page_config(
 
 #dataframe
 def load_df():
-    data = pd.read_csv(csv_file)
+    data = pd.read_csv(url)
     df = pd.DataFrame(data)
     return df
 df_ = load_df()
@@ -98,14 +100,14 @@ with main_column:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
-                    df_.to_csv(csv_file, index=False)
+                    #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
-                    df_.to_csv(csv_file, index=False)
+                    #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
-                    df_.to_csv(csv_file, index=False)
+                    #df_.to_csv(csv_file, index=False)
                 except:
                     pass
         except ValueError:
