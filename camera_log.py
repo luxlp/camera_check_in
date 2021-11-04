@@ -29,7 +29,7 @@ st.set_page_config(
 def load_df():
     data = pd.read_csv(url, error_bad_lines=False)
     df = pd.DataFrame(data)
-    return df
+    return df.astype(str)
 df_ = load_df()
 
 st.title("Camera Check-in/out :jack_o_lantern:")
@@ -73,7 +73,7 @@ with main_column:
     try:
         dfin = {
                 'Camera': camera1,
-                'User': str(user1),
+                'User': user1,
                 'Purpose': purpose_change(),
                 'Check-Out': time_,
                 'Return': np.nan
