@@ -16,7 +16,7 @@ user = getuser()
 #files
 #csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
 #URL
-url = 'https://github.com/luxlp/camera_check_in/blob/main/Device_sign-out_sheet.csv'
+url = 'https://github.com/luxlp/camera_check_in/blob/main/Device_sign-out_sheet.csv?raw=true'
 #Page-Setup-----------------------------------------------------------------------------------------------------------
 st.set_page_config(
     page_title='Camera Check-in/out',
