@@ -27,7 +27,7 @@ st.set_page_config(
 
 #dataframe
 def load_df():
-    data = pd.read_csv(url)
+    data = pd.read_csv(url, error_bad_lines=False)
     df = pd.DataFrame(data)
     return df
 df_ = load_df()
