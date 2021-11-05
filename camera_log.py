@@ -65,6 +65,8 @@ with main_column:
             return 'Rack Shipment Record'
         elif camera1 in camera_asset_id_qt:
             return 'Quality Investigation'
+        elif camera1 == '':
+            pass
         else:
             st.error(f'{camera1} Not in our database, or check spelling!')
             sys.exit(1)
