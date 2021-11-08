@@ -108,7 +108,7 @@ with main_column:
     part_three = dft.iloc[2,0]
     unite = str(part_one + part_two + part_three)
     
-    df2_ = df_.to_csv(sep=',', index=False)
+    df2_ = df_.to_csv(sep=',')
 
     file_list = [df2_]
     file_name = ['Device_sign-out_sheet.csv']
