@@ -7,6 +7,7 @@ import sys
 import numpy as np
 from streamlit import errors
 
+import git_csv_saver
 
 
 #computer user
@@ -102,13 +103,16 @@ with main_column:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
+                    git_csv_saver.updategitfile()
                     #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
+                    git_csv_saver.updategitfile()
                     #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
+                    git_csv_saver.updategitfile()
                     #df_.to_csv(csv_file, index=False)
                 except:
                     pass
