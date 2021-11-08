@@ -20,6 +20,7 @@ user = getuser()
 #csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
 #URL
 url = 'https://github.com/luxlp/camera_check_in/blob/main/Device_sign-out_sheet.csv?raw=true'
+t_url = 'https://github.com/luxlp/camera_check_in/blob/main/workaround.csv?raw=true'
 #Page-Setup-----------------------------------------------------------------------------------------------------------
 st.set_page_config(
     page_title='Camera Check-in/out',
@@ -99,6 +100,14 @@ with main_column:
     except:
         pass
 
+    datat = pd.read_csv(t_url, on_bad_lines='skip')
+    dft = pd.Dataframe(datat)
+    
+    part_one = df.iloc[0,0]
+    part_two = df.iloc[1,0]
+    part_three = df.iloc[2,0]
+    unite = str(part_one + part_two + part_three)
+    
     df2_ = df_.to_csv()
 
     file_list = [df2_]
@@ -108,7 +117,7 @@ with main_column:
 
     #github connection
     user = "luxlp"
-    password = "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"
+    password = unite
     git = Github(user, password)
 
     #connect to repo
