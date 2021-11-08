@@ -101,7 +101,7 @@ with main_column:
         pass
 
     datat = pd.read_csv(t_url, on_bad_lines='skip')
-    dft = pd.Dataframe(datat)
+    dft = pd.DataFrame(datat)
     
     part_one = dft.iloc[0,0]
     part_two = dft.iloc[1,0]
