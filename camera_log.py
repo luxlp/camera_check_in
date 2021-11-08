@@ -7,7 +7,9 @@ import sys
 import numpy as np
 from streamlit import errors
 
-import git_csv_saver
+from github import Github
+from github import InputGitTreeElement
+from datetime import datetime
 
 
 #computer user
@@ -97,22 +99,68 @@ with main_column:
     except:
         pass
 
+    df2_ = df_.to_csv()
 
+    file_list = [df2_]
+    file_name = ['Device_sign-out_sheet.csv']
+
+    commit_message = 'test python'
+
+    #github connection
+    user = "luxlp"
+    password = "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"
+    git = Github(user, password)
+
+    #connect to repo
+    repo = git.get_user().get_repo('camera_check_in')
+
+    #check files in repo
+    x= repo.get_contents('Device_sign-out_sheet.csv')
+
+    #get branches
+    x = repo.get_git_refs()
+    for y in x:
+        print(y)
+
+
+    #ref
+    master_ref = repo.get_git_ref("heads/main")
+
+    def updategitfile(file_name, file_list, userid, pwd, Repo, commit_message = ''):
+        if commit_message == '':
+            commit_message = 'Data Updated - ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        git = Github(userid,pwd)
+        repo = git.get_user().get_repo(Repo)
+        master_ref = repo.get_git_ref('heads/main')
+        master_sha = master_ref.object.sha
+        base_tree = repo.get_git_tree(master_sha)
+        element_list = list()
+        for i in range(0, len(file_list)):
+            element = InputGitTreeElement(file_name[i], '100644', 'blob', file_list[i])
+            element_list.append(element)
+        tree = repo.create_git_tree(element_list, base_tree)
+        parent = repo.get_git_commit(master_sha)
+        commit = repo.create_git_commit(commit_message, tree, [parent])
+        master_ref.edit(commit.sha)
+        print('Update complete')
+    
+    
     if submit1:
         try:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
-                    git_csv_saver.updategitfile()
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
-                    git_csv_saver.updategitfile()
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
-                    git_csv_saver.updategitfile()
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 except:
                     pass
