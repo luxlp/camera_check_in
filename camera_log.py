@@ -108,7 +108,7 @@ with main_column:
 
     #github connection
     user = "luxlp"
-    password = "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"
+    password = "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"
     git = Github(user, password)
 
     #connect to repo
