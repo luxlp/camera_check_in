@@ -21,7 +21,7 @@ commit_message = 'test python'
 
 #github connection
 user = "luxlp"
-password = "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"
+password = "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"
 git = Github(user, password)
 
 #connect to repo
