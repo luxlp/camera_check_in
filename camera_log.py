@@ -31,7 +31,7 @@ st.set_page_config(
 
 #dataframe
 def load_df():
-    data = pd.read_csv(url, on_bad_lines='skip')
+    data = pd.read_csv(url,index_col=0, on_bad_lines='skip')
     df = pd.DataFrame(data)
     return df.astype(str)
 df_ = load_df()
@@ -108,7 +108,7 @@ with main_column:
     part_three = dft.iloc[2,0]
     unite = str(part_one + part_two + part_three)
     
-    df2_ = df_.to_csv(sep=',')
+    df2_ = df_.to_csv(sep=',', index=False)
 
     file_list = [df2_]
     file_name = ['Device_sign-out_sheet.csv']
