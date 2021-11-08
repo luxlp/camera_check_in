@@ -112,7 +112,7 @@ with main_column:
     git = Github(user, password)
 
     #connect to repo
-    repo = git.get_user().get_repo('camera_check_in')
+    repo = git.get_user('luxlp').get_repo('camera_check_in')
 
     #check files in repo
     x= repo.get_contents('Device_sign-out_sheet.csv')
