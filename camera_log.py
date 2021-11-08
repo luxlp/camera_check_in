@@ -178,8 +178,6 @@ with main_column:
 
 with s_column:
     st.write(df_)
-
-    @st.cache
     def convert_df(df):
         return df.to_csv(index = False).encode('utf-8')
     
