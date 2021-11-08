@@ -103,9 +103,9 @@ with main_column:
     datat = pd.read_csv(t_url, on_bad_lines='skip')
     dft = pd.Dataframe(datat)
     
-    part_one = df.iloc[0,0]
-    part_two = df.iloc[1,0]
-    part_three = df.iloc[2,0]
+    part_one = dft.iloc[0,0]
+    part_two = dft.iloc[1,0]
+    part_three = dft.iloc[2,0]
     unite = str(part_one + part_two + part_three)
     
     df2_ = df_.to_csv()
