@@ -29,7 +29,7 @@ st.set_page_config(
 upl = st.file_uploader('File to upload', type = 'csv')
 
 
-data = pd.read_csv(filename, on_bad_lines='skip')
+data = pd.read_csv(upl, on_bad_lines='skip')
 df = pd.DataFrame(data)
 df_ = df.astype(str)
 
