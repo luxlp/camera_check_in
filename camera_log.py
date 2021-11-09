@@ -24,15 +24,18 @@ st.set_page_config(
     initial_sidebar_state='auto'
 )
 
-global df_
 #dataframe
-try:
-    with open(csv_file) as input:
-        data = pd.read_csv(input, on_bad_lines='skip')
-        df = pd.DataFrame(data)
-        df_ = df.astype(str)
-except FileNotFoundError:
-    st.error('File not found')
+def file_():
+    try:
+        data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
+        csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
+        return csv_file
+    except FileNotFoundError:
+        st.error('File not found')
+
+data = pd.read_csv(csv_file, on_bad_lines='skip')
+df = pd.DataFrame(data)
+df_ = df.astype(str)
 
 st.title("Camera Check-in/out :jack_o_lantern:")
 # st.write(':Jack-O-Lantern:')
