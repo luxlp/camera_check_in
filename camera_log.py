@@ -27,7 +27,6 @@ st.set_page_config(
 #dataframe
 try:
     with open(csv_file) as input:
-        def load_df():
         data = pd.read_csv(input, on_bad_lines='skip')
         df = pd.DataFrame(data)
         df_ = df.astype(str)
