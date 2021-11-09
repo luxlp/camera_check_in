@@ -26,7 +26,7 @@ st.set_page_config(
 )
 
 #dataframe
-upl = st.file_uploader('File to upload', type = csv)
+upl = st.file_uploader('File to upload', type = 'csv')
 
 try:
     data = pd.read_csv(filename, on_bad_lines='skip')
