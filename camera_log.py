@@ -28,7 +28,7 @@ st.set_page_config(
 def file_(folder_path='.'):
     try:
         filen = os.listdir(folder_path)
-        data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
+        data_dir = fr'C:\Users\luis.peguero\Desktop\Projects\camera_in-out'
         csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
         return os.path.join(folder_path, csv_file)
     except FileNotFoundError:
