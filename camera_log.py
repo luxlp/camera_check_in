@@ -28,10 +28,9 @@ st.set_page_config(
 try:
     with open(csv_file) as input:
         def load_df():
-            data = pd.read_csv(input, on_bad_lines='skip')
-            df = pd.DataFrame(data)
-            return df.astype(str)
-        df_ = load_df()
+        data = pd.read_csv(input, on_bad_lines='skip')
+        df = pd.DataFrame(data)
+        df_ = df.astype(str)
 except FileNotFoundError:
     st.error('File not found')
 
