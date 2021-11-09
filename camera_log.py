@@ -114,7 +114,7 @@ with main_column:
             pass
 
 with s_column:
-    st.write(df_)
+    st.write(df)
     def convert_df(df):
         return df.to_csv(index = False).encode('utf-8')
     
