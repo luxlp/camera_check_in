@@ -24,6 +24,7 @@ st.set_page_config(
     initial_sidebar_state='auto'
 )
 
+global df_
 #dataframe
 try:
     with open(csv_file) as input:
