@@ -7,16 +7,20 @@ import sys
 import numpy as np
 from streamlit import errors
 
+from github import Github
+from github import InputGitTreeElement
+from datetime import datetime
 
 
 #computer user
-user = getuser()
+#user = getuser()
 #dir
-data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
+#data_dir = fr'C:\Users\{user}\Desktop\Projects\camera_in-out'
 #files
-csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
+#csv_file = f'{data_dir}./Device_sign-out_sheet.csv'
 #URL
-
+url = 'https://github.com/luxlp/camera_check_in/blob/main/Device_sign-out_sheet.csv?raw=true'
+t_url = 'https://github.com/luxlp/camera_check_in/blob/main/workaround.csv?raw=true'
 #Page-Setup-----------------------------------------------------------------------------------------------------------
 st.set_page_config(
     page_title='Camera Check-in/out',
@@ -26,13 +30,11 @@ st.set_page_config(
 )
 
 #dataframe
-upl = st.file_uploader('File to upload', type = 'csv')
-
-
-data = pd.read_csv(upl, on_bad_lines='skip')
-df = pd.DataFrame(data)
-df_ = df.astype(str)
-
+def load_df():
+    data = pd.read_csv(url, on_bad_lines='skip')
+    df = pd.DataFrame(data)
+    return df.astype(str)
+df_ = load_df()
 
 st.title("Camera Check-in/out :jack_o_lantern:")
 # st.write(':Jack-O-Lantern:')
@@ -73,6 +75,7 @@ with main_column:
             st.error(f'{camera1} Not in our database, or check spelling!')
             sys.exit(1)
 
+
     try:
         dfin = {
                 'Camera': camera1,
@@ -83,6 +86,9 @@ with main_column:
             }
     except:
         pass
+   
+    # def my_actions(a: bool, b: bool) -> int:
+    #     return 2 * a + b
 
     try:
         def check():
@@ -93,6 +99,60 @@ with main_column:
                 pass
     except:
         pass
+
+    datat = pd.read_csv(t_url, on_bad_lines='skip')
+    dft = pd.DataFrame(datat)
+    
+    part_one = dft.iloc[0,0]
+    part_two = dft.iloc[1,0]
+    part_three = dft.iloc[2,0]
+    unite = str(part_one + part_two + part_three)
+    
+    df2_ = df_.to_csv(sep=',', index=False)
+
+    file_list = [df2_]
+    file_name = ['Device_sign-out_sheet.csv']
+
+    commit_message = 'test python'
+
+    #github connection
+    user = "luxlp"
+    password = unite
+    git = Github(user, password)
+
+    #connect to repo
+    repo = git.get_user('luxlp').get_repo('camera_check_in')
+
+    #check files in repo
+    x= repo.get_contents('Device_sign-out_sheet.csv')
+
+    #get branches
+    x = repo.get_git_refs()
+    for y in x:
+        print(y)
+
+
+    #ref
+    master_ref = repo.get_git_ref("heads/main")
+
+    def updategitfile(file_name, file_list, userid, pwd, Repo, commit_message = ''):
+        if commit_message == '':
+            commit_message = 'Data Updated - ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        git = Github(userid,pwd)
+        repo = git.get_user().get_repo(Repo)
+        master_ref = repo.get_git_ref('heads/main')
+        master_sha = master_ref.object.sha
+        base_tree = repo.get_git_tree(master_sha)
+        element_list = list()
+        for i in range(0, len(file_list)):
+            element = InputGitTreeElement(file_name[i], '100644', 'blob', file_list[i])
+            element_list.append(element)
+        tree = repo.create_git_tree(element_list, base_tree)
+        parent = repo.get_git_commit(master_sha)
+        commit = repo.create_git_commit(commit_message, tree, [parent])
+        master_ref.edit(commit.sha)
+        print('Update complete')
     
     
     if submit1:
@@ -100,13 +160,16 @@ with main_column:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 except:
                     pass
@@ -119,7 +182,8 @@ with s_column:
         return df.to_csv(index = False).encode('utf-8')
     
     csv = convert_df(df_)
-    
+
+
     st.download_button(
         label = "Download data as CSV",
         data = csv,
