@@ -180,18 +180,18 @@ with main_column:
                     #file_list = [df2_]
                     #updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
+                except:
+                    pass
                 finally:
                     df2_ = df_.to_csv(sep=',', index=False)
                     file_list = [df2_]
                     updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
-                except:
-                    pass
+        except ValueError:
+            pass
         finally:
             df2_ = df_.to_csv(sep=',', index=False)
             file_list = [df2_]
             updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
-        except ValueError:
-            pass
 
 with s_column:
     st.write(df_)
