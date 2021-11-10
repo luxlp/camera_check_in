@@ -162,7 +162,7 @@ with main_column:
         try:
             if (camera1 in df_.values):
                 if check():
-                    df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
+                    df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isna()), 'Return'] = time_
                     #df2_ = df_.to_csv(sep=',', index=False)
                     #file_list = [df2_]
                     #updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
