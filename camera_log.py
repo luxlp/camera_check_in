@@ -30,6 +30,7 @@ st.set_page_config(
     initial_sidebar_state='auto'
 )
 
+global df_
 #dataframe
 def load_df():
     data = pd.read_csv(url, on_bad_lines='skip')
