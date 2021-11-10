@@ -94,7 +94,7 @@ with main_column:
 
     try:
         def check():
-            set = df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull())]
+            set = df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isna())]
             if set.size != 0:
                 return set.iat[0,4]
             else:
