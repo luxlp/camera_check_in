@@ -145,11 +145,11 @@ with main_column:
         master_ref = repo.get_git_ref('heads/main')
         master_sha = master_ref.object.sha
         base_tree = repo.get_git_tree(master_sha)
-        #element_list = list()
-        #for i in range(0, len(file_list)):
-        element = InputGitTreeElement(file_name, '100644', 'blob', file_list)
-            #element_list.append(element)
-        tree = repo.create_git_tree(element, base_tree)
+        element_list = list()
+        for i in range(0, len(file_list)):
+            element = InputGitTreeElement(file_name[i], '100644', 'blob', file_list[i])
+            element_list.append(element)
+        tree = repo.create_git_tree(element_list, base_tree)
         parent = repo.get_git_commit(master_sha)
         commit = repo.create_git_commit(commit_message, tree, [parent])
         master_ref.edit(commit.sha)
