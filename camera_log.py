@@ -138,7 +138,7 @@ with main_column:
 
     def updategitfile(file_name, file_list, userid, pwd, Repo, commit_message = ''):
         if commit_message == '':
-            commit_message = 'Data Updated - ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            commit_message = 'Data Updated - ' + time_
 
         git = Github(userid,pwd)
         repo = git.get_user().get_repo(Repo)
