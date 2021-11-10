@@ -6,6 +6,7 @@ import pandas as pd
 import sys
 import numpy as np
 from streamlit import errors
+from time import sleep
 
 from github import Github
 from github import InputGitTreeElement
@@ -161,15 +162,18 @@ with main_column:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
+                    sleep(0.5)
                     updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
+                    sleep(0.5)
                     updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
+                    sleep(0.5)
                     updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 except:
