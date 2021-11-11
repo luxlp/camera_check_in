@@ -33,9 +33,9 @@ st.set_page_config(
 global df_
 #dataframe
 def load_df():
-    data = pd.read_csv(url, on_bad_lines='skip')
+    data = pd.read_csv(url)
     df = pd.DataFrame(data)
-    return df.astype(str)
+    return df
 df_ = load_df()
 
 st.title("Camera Check-in/out :jack_o_lantern:")
@@ -45,7 +45,8 @@ st.title("Camera Check-in/out :jack_o_lantern:")
 main_column, s_column = st.columns(2)
 #cameras in inv
 camera_asset_id_ipqc = ['Quality 2','Quality 12','Quality 13','Quality 14','Quality 15']
-camera_asset_id_qt = ['Quality 1']
+camera_asset_id_qt = ['Quality 1', 'Quality 6']
+camera_asset_id_wh = ['Quality 7', 'Quality 8', 'Quality 9', 'Quality 10', 'Quality 11']
 # camera_asset_id = ['165278', 'nan', 'nan', 'nan', 'nan', 'nan']
 
 with main_column:
@@ -71,6 +72,8 @@ with main_column:
             return 'Rack Shipment Record'
         elif camera1 in camera_asset_id_qt:
             return 'Quality Investigation'
+        elif camera1 in camera_asset_id_wh:
+            return 'IQC/Rework/Inspection Record'
         elif camera1 == '':
             pass
         else:
@@ -194,7 +197,7 @@ with main_column:
             updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
 
 with s_column:
-    st.write(df_)
+    st.write(df_.astype(str))
     def convert_df(df):
         return df.to_csv(index = False).encode('utf-8')
     
@@ -207,6 +210,13 @@ with s_column:
         file_name = f'{today_}_Camera_log.csv',
         mime = 'text/csv',
     )
-
+    
+    #show table of cameras in stock
+    st.write('Cameras ownage per Team')
+    table = {'IPQC3': ['Quality 2','Quality 12','Quality 13','Quality 14','Quality 15'],
+            'Quality Team': ['Quality 1', 'Quality 6', 'x', 'x', 'x'],
+            'IQC': ['Quality 7', 'Quality 8', 'Quality 9', 'Quality 10', 'Quality 11']}
+    df_table = pd.DataFrame(table)
+    st.table(df_table)
         
     
