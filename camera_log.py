@@ -166,22 +166,22 @@ with main_column:
             if (camera1 in df_.values):
                 if check():
                     df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
-                    #df2_ = df_.to_csv(sep=',', index=False)
-                    #file_list = [df2_]
-                    #updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
+                    df2_ = df_.to_csv(sep=',', index=False)
+                    file_list = [df2_]
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 else:
                     df_ = df_.append(dfin, ignore_index = True)
-                    #df2_ = df_.to_csv(sep=',', index=False)
-                    #file_list = [df2_]
-                    #updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
+                    df2_ = df_.to_csv(sep=',', index=False)
+                    file_list = [df2_]
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
             else:
                 try:
                     df_ = df_.append(dfin, ignore_index = True)
-                    #df2_ = df_.to_csv(sep=',', index=False)
-                    #file_list = [df2_]
-                    #updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
+                    df2_ = df_.to_csv(sep=',', index=False)
+                    file_list = [df2_]
+                    updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
                     #df_.to_csv(csv_file, index=False)
                 except:
                     pass
