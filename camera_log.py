@@ -10,7 +10,7 @@ from time import sleep
 
 from github import Github
 from github import InputGitTreeElement
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 #computer user
@@ -54,8 +54,15 @@ with main_column:
     camera1 = form1.text_input('Enter Camera name/asset id')
     user1 = form1.text_input('Enter user name/id')
     submit1 = form1.form_submit_button('Submit')
-    time_ = datetime.now().strftime('%m/%d/%y %H:%M:%S')
-    today_ = date.today().strftime('%m/%d/%y')
+    def utc_to_local(utc_dt):
+        return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    def local(utc_dt):
+        return utc_to_local(utc_dt).strftime('%m/%d/%y %H:%M:%S')
+    def local_(utc_dt):
+        return utc_to_local(utc_dt).strftime('%m/%d/%y')
+    time_ = local(datetime.utcnow())
+    #time_ = datetime.now().strftime('%m/%d/%y %H:%M:%S')
+    today_ = local_(datetime.utcnow())
 
     dict = {
             'Camera': [''],
