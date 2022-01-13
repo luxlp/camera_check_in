@@ -7,6 +7,7 @@ import sys
 import numpy as np
 from streamlit import errors
 from time import sleep
+import pytz
 
 from github import Github
 from github import InputGitTreeElement
@@ -60,6 +61,12 @@ with main_column:
         return utc_to_local(utc_dt).strftime('%m/%d/%y %H:%M:%S')
     def local_(utc_dt):
         return utc_to_local(utc_dt).strftime('%m/%d/%y')
+    def time_conv():
+        utc_now = pytz.utc.localize(datetime.utcnow())
+        est = utc_now.astimezone(pytz.timezone('US/Eastern'))
+        time_est = est.strftime('%m/%d/%y %H:%M:%S')
+        return time_est
+    eastern_time_ = time_conv()
     time_ = local(datetime.utcnow())
     #time_ = datetime.now().strftime('%m/%d/%y %H:%M:%S')
     today_ = local_(datetime.utcnow())
@@ -93,7 +100,7 @@ with main_column:
                 'Camera': camera1,
                 'User': user1,
                 'Purpose': purpose_change(),
-                'Check-Out': time_,
+                'Check-Out': eastern_time_,
                 'Return': np.nan
             }
     except:
@@ -150,7 +157,7 @@ with main_column:
 
     def updategitfile(file_name, file_list, userid, pwd, Repo, commit_message = ''):
         if commit_message == '':
-            commit_message = 'Data Updated - ' + time_
+            commit_message = 'Data Updated - ' + eastern_time_
 
         git = Github(userid,pwd)
         repo = git.get_user().get_repo(Repo)
@@ -172,7 +179,7 @@ with main_column:
         try:
             if (camera1 in df_.values):
                 if check():
-                    df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = time_
+                    df_.loc[(df_['Camera'] == camera1) & (df_['Return'].isnull()), 'Return'] = eastern_time_
                     df2_ = df_.to_csv(sep=',', index=False)
                     file_list = [df2_]
                     updategitfile(file_name, file_list, user, password, 'camera_check_in', 'heads/main')
