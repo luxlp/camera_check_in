@@ -39,7 +39,7 @@ def load_df():
     return df
 df_ = load_df()
 
-st.title("Camera Check-in/out :snowflake:")
+st.title("Camera Check-in/out :sunny:")
 # st.write(':Jack-O-Lantern:')
 
 #set columns
